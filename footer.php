@@ -59,30 +59,7 @@
     </footer>
 
     <script>
-        $('.buy_button').on('click', function() {
 
-            var that = $(this).closest('.product__item').find('img');
-            var bascket = $(".basket");
-            var w = that.width();
-
-            that.clone()
-                .css({
-                    'width': w,
-                    'position': 'absolute',
-                    'z-index': '9999',
-                    top: that.offset().top,
-                    left: that.offset().left
-                })
-                .appendTo("body")
-                .animate({
-                    opacity: 0.05,
-                    left: bascket.offset()['left'],
-                    top: bascket.offset()['top'],
-                    width: 20
-                }, 2000, function() {
-                    $(this).remove();
-                });
-        });
     </script>
     <script src="<?php print get_template_directory_uri(); ?>/js/script.js"></script>
 

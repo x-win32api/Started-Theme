@@ -15,69 +15,72 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
-
-		<?php
-		while ( have_posts() ) :
-			the_post(); ?>
-
-<?php
-/**
- * Template part for displaying page content in page.php
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package Started
- */
-
-?>
-
-
+	<?php
+	while ( have_posts() ) :
+	the_post(); 
+	?>
+<section class="order">
 <div class="container">
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
+
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header>
 
 
-<div class="order-basket">
-                        <div class="basketFly__top">
+<div class="order__items">
+
+					<div class="order__item">
+					<div class="transfer__form">
+					<div class="order-basket">
+                        <div class="form__title">
                             У вас в корзине:
                         </div>
                         <div class="basketFly__empty" data-empty>
                             Добавьте товары в корзину
                         </div>
                         <div class="basketFly__list" data-list>
-
                         </div>
                         <div class="basketFly__total">
                             Итого: <span data-total-price>0</span> руб.
                         </div>
-                       
+					</div>
+					</div>
                     </div>
-	<div class="entry-content">
-		<?php
-		the_content();
-		?>
-	</div>
 
-</article><!-- #post-<?php the_ID(); ?> -->
+					<div class="order__item order__info">
 
+					<div class="transfer__form">
+                            <form method="post" class="ajax_form_transfer" action="">
+                                <div class="form__title">Оформить заказ</div>
+                                <div class="inputText"><input type="text" name="name" placeholder="Имя"></div>
+                                <div class="inputText"><input type="text" name="tel" placeholder="Телефон"></div>
+                                <div class="inputText"><input type="text" name="count" placeholder="Адрес доставки">
+                                <div class="login"><input type="text" name="mail" value="mail@mail.com" placeholder="mail@mail.com"></div>
+                                </div>
+                                <div class="inputText"><button class="btn" type="submit">ЗАКАЗАТЬ</button></div>
+                                <div class="inputText result_form"></div>
+                            </form>
+                        </div>
+
+
+						<?php
+						the_content();
+						?>
+					</div>
+</div>
+				
+
+
+
+
+
+</article>
 </div>
 
 
 
 
-<?
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+<? endwhile; ?>
 
-		endwhile; // End of the loop.
-		?>
-
-	</main><!-- #main -->
+</section>
 
 <?php
 get_sidebar();

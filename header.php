@@ -29,8 +29,8 @@
         <div class="container">
             <div class="header__items">
                 <div class="logo">
-                    <div class="logo__img"><img src="/img/logo.svg" width="70px" height="auto"></div>
-                    <div class="logo__slug">Доставка пиццы и роллов<br> в Ставрополе.</div>
+                    <div class="logo__img"><a href="/"><img src="/img/max-logo.png" width="100px" height="auto"></a></div>
+                    <div class="logo__slug">Доставка пиццы и суши<br> в Ставрополе.</div>
                 </div>
                 <div class="contact">
                     <div class="contactTime">Время работы:<br>c 11:00 до 23:00</div>
@@ -57,7 +57,7 @@
                         <div class="basketFly__total">
                             Итого: <span data-total-price>0</span> руб.
                         </div>
-                        <div class="basketFly__order"><a class="basketFly__order-link" href="">Оформить заказ</a></div>
+                        <div class="basketFly__order"><a class="basketFly__order-link" href="/order/">Оформить заказ</a></div>
                     </div>
                 </div>
     </header>

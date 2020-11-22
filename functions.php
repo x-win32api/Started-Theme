@@ -182,3 +182,45 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 //	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+
+
+// шаблон вывода комментариев
+
+function mytheme_comment($comment, $args, $depth){
+    $GLOBALS['comment'] = $comment; ?>
+ 
+<div class="comment-block">  
+		  
+		
+		<div class="comment-autor">
+					<?php printf(__('<div class="comment-autor-name">%s</cite> '),  get_comment_author()) ?>
+		</div>
+  
+		  
+	<?php if ($comment->comment_approved == '0') : ?>
+
+	<em><?php _e('Your comment is awaiting moderation.') ?></em>
+	<br/>
+	<?php endif; ?>
+  
+ 
+		<div class="comment-content">  
+			<div class="comment-content-text">
+				<?php comment_text() ?>
+			</div>				
+			<div class="reply-data-wrapper">
+				<div class="comment-meta commentmetadata">
+					<?php printf(__('%1$s at %2$s'), get_comment_date(), get_comment_time()) ?>
+					<?php edit_comment_link(__('(Edit)'),'  ','') ?>
+				</div>  
+
+				<div class="reply">
+					<?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+				</div>   
+			</div>
+		</div>	
+
+</div>  
+		
+  <?php }

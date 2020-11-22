@@ -19,11 +19,8 @@
 					<img src="<?php print get_the_post_thumbnail_url(); ?>" alt="<?php print $image_alt; ?>" width="500" height="299">
 					 
                     </div>
-                    <? if(!is_category()) : ?>
-                        <div class="product__item-title"><?php print get_the_title(); ?></div>
-                    <? else: ?>
+ 
                         <div class="product__item-title"><a href="<? print get_permalink(); ?>"><?php print get_the_title(); ?></a></div>
-                    <? endif; ?>
 
                          <?
                          $content = get_the_content(); 
@@ -56,7 +53,6 @@
                         <? endif; ?>
                     </div>
                   
-                    <? if(!is_category()) : ?><div class="product__item-postcount">Сколько единиц хотите заказать?</div><? endif; ?>
                     <div class="product__item-count">
                         <div class="countMinus position__minus"></div>
                         <div class="countProduct position__count">1</div>
@@ -65,21 +61,12 @@
 
                     <div class="buy__group">
                         <div class="product__item-price">
-                        <? if(!is_category()) : ?><span class="price-post">Цена:</span>
-                            <?php print get_field( "price" ); ?><span class="price-post">руб./шт.</span>
-                            <? else : ?>
+                      
                             <?php print get_field( "price" ); ?> ₽
-                        <? endif; ?>
-                         
-						
+
                         </div>
                         <div class="product__item-buy">
-                        <? if(!is_category()) : ?>
-                            <button class="buy_button">Добавить в корзину</button>
-                            <? else : ?>
-                            <button class="buy_button">В корзину +</button>
-                        <? endif; ?>
-                            
+                            <button class="buy_button">В корзину +</button>     
 						</div>
 					</div>
 					<?php edit_post_link('Редактировать товар', '<div class="edit__post buy_button" style="padding-top:20px;text-align:center;">', '</div>'); ?>

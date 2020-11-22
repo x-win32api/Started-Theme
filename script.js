@@ -11,7 +11,7 @@
                 totalPrice = basketBlock.find('[data-total-price]'),
                 emptyTxt = basketBlock.find('[data-empty]');
 
-            $('.filter').on('click', 'button.buy_button', function() {
+            $('.buy_button').on('click', function() {
                 var arrayBasket = JSON.parse(localStorage.getItem('basket'));
                 if (arrayBasket === null) {
                     arrayBasket = [];
@@ -143,13 +143,13 @@
             return false;
         });
 
-        $('.filter').on('click', '.position__plus', function(item) {
+        $('.product__item-count .position__plus').on('click', function(item) {
             var val_position = $(this).parent().parent().find('div.position__count');
             var value = Number(val_position.text()) + 1;
             console.log(value);
             val_position.text(value);
         });
-        $('.filter').on('click', '.position__minus', function(item) {
+        $('.product__item-count .position__minus').on('click', function(item) {
             var val_position = $(this).parent().parent().find('div.position__count');
             var value = Number(val_position.text());
             if (value > 1) {
@@ -207,74 +207,6 @@
             loader: $('<div />', { class: 'loader-container' }),
             container: $('.container_ajax')
         }
-
-
-        /* отправка формы ajax*/
-        $('.ajax_form_transfer').submit(function(e) {
-            var name = $('.ajax_form_transfer input[name="name"]');
-            var tel = $('.ajax_form_transfer input[name="tel"]');
-            if (tel.val() == '' || name.val() == '') {
-                tel.css("border", "1px solid red");
-                name.css("border", "1px solid red");
-                $('.result_form').css("background-color", "red").html('Нужно заполнить обязательные поля!');
-                return false;
-            }
-            //url: '/wp-admin/admin-ajax.php',
-            sendAjaxForm('result_form', 'ajax_form_transfer', '/wp-admin/admin-ajax.php');
-            return false;
-        });
-
-        function sendAjaxForm(result_form, ajax_form, url) {
-
-            var arrayBasket = localStorage.getItem('basket');
-
-            //  result.push(arrayBasket);
-
-            var form_data = $("." + ajax_form).serialize();
-            $.ajax({
-                url: url, //url страницы (action_ajax_form.php)
-                type: 'POST',
-                data: {
-                    'action': 'order',
-                    'order': arrayBasket,
-                    'form': form_data
-                },
-                // data: $("." + ajax_form).serialize(), // Сеарилизуем объект
-                success: function(response) { //Данные отправлены успешно
-                    $('.result_form').css("background-color", "green").html(response);
-                },
-                error: function(response) { // Данные не отправлены
-                    $('.result_form').css("background-color", "red").html('Ошибка! Обратитесь к администратору сайта.');
-                }
-            });
-        }
-
-        // полет в корзину
-        $('.filter').on('click', '.buy_button', function() {
-
-            var that = $(this).closest('.product__item').find('img');
-            var bascket = $(".basket");
-            var w = that.width();
-
-            that.clone()
-                .css({
-                    'width': w,
-                    'position': 'absolute',
-                    'z-index': '9999',
-                    top: that.offset().top,
-                    left: that.offset().left
-                })
-                .appendTo("body")
-                .animate({
-                    opacity: 0.05,
-                    left: bascket.offset()['left'],
-                    top: bascket.offset()['top'],
-                    width: 20
-                }, 2000, function() {
-                    $(this).remove();
-                });
-        });
-
 
 
     });

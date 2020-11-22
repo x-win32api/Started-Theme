@@ -15,63 +15,58 @@
  * the visitor has not yet entered the password we will
  * return early without loading the comments.
  */
-if ( post_password_required() ) {
-	return;
-}
+?>
+<?php if ( post_password_required() ) 
+{ return; }
 ?>
 
-<div id="comments" class="comments-area">
-
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
-		?>
-		<h2 class="comments-title">
+<div id="comments">
+<?php if ( have_comments() ) : ?>
+		<div class="comment-list">
 			<?php
-			$started_comment_count = get_comments_number();
-			if ( '1' === $started_comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'started' ),
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			} else {
-				printf( 
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $started_comment_count, 'comments title', 'started' ) ),
-					number_format_i18n( $started_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			}
+				wp_list_comments( array(
+					'style'       => 'ol',
+					'short_ping'  => true,
+				    'callback' => 'mytheme_comment'
+				) );
 			?>
-		</h2><!-- .comments-title -->
+		</div>
+<?php endif; ?>
+</div>
 
-		<?php the_comments_navigation(); ?>
+<?php if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :	?>
+		<p class="no-comments"><?php _e( 'Comments are closed.' ); ?></p>
+<?php endif; ?>
 
-		<ol class="comment-list">
-			<?php
-			wp_list_comments(
-				array(
-					'style'      => 'ol',
-					'short_ping' => true,
-				)
-			);
-			?>
-		</ol><!-- .comment-list -->
+<?php $defaults = array(
+		'fields'=> array(
+		'author' => '<div class="inputText"><input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" placeholder="Ваше имя" /></div>',
+		'email'  => '<div class="inputText"><input id="email" name="email" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30" placeholder="E-mail" aria-describedby="email-notes" /></div>',
+		'cookies' => false, 
+		),
+		'comment_field'        => '<div class="inputText"><textarea id="comment" name="comment" cols="45" rows="4"  aria-required="true" required="required" placeholder="Отзыв"></textarea></div>',
+		'must_log_in'          => '<p class="must-log-in">' . sprintf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink() ) ) ) . '</p>',
+		'logged_in_as'         => '<p class="logged-in-as">' . sprintf( __( '<a href="%1$s" aria-label="Logged in as %2$s. Edit your profile.">Logged in as %2$s</a>. <a href="%3$s">Log out?</a>' ), get_edit_user_link(), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink() ) ) ) . '</p>',
+		'comment_notes_before' => '', // текст перед формой комментирования
+		'comment_notes_after'  => '',
+		'id_form'              => 'commentform',
+		'id_submit'            => 'submit',
+		'class_form'           => 'comment-form',
+		'class_submit'         => 'submit',
+		'name_submit'          => 'submit',
+		'title_reply'          => 'Оставьте Ваш отзыв о "'.get_the_title().'"',
+		'title_reply_to'       => __( 'Leave a Reply to %s' ),
+		'title_reply_before'   => '<div id="reply-title" class="comment-reply-title">',
+		'title_reply_after'    => '</div>',
+		'cancel_reply_before'  => ' <small>',
+		'cancel_reply_after'   => '</small>',
+		'cancel_reply_link'    => __( 'Cancel reply' ),
+		'label_submit'         => __( 'Post Comment' ),
+		'submit_button'        => '<div class="inputText"><input name="%1$s" type="submit" id="%2$s" class="btn %3$s" value="Оставить отзыв" /></div>',
+		'submit_field'         => '<p class="form-submit">%1$s %2$s</p>',
+		'format'               => 'xhtml',
+	);
 
-		<?php
-		the_comments_navigation();
-
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() ) :
-			?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'started' ); ?></p>
-			<?php
-		endif;
-
-	endif; // Check for have_comments().
-
-	comment_form();
+	comment_form( $defaults ); 
 	?>
-
 </div><!-- #comments -->
